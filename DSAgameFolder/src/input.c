@@ -23,6 +23,7 @@ Command input_from_key(int c) {
         case '9': return CMD_NEXT;
         case '*': return CMD_LEVELS;
         case '0': return CMD_BACK;
+        case 'D': return CMD_SOLVE;
         default:  return CMD_NONE;
     }
 }
