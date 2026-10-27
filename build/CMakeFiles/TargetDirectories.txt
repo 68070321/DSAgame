@@ -1,5 +1,0 @@
-D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/build/CMakeFiles/DSAgame.dir
-D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/build/CMakeFiles/edit_cache.dir
-D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/build/CMakeFiles/rebuild_cache.dir
-D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/build/src/CMakeFiles/edit_cache.dir
-D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/build/src/CMakeFiles/rebuild_cache.dir
