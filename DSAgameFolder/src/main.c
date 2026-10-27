@@ -8,6 +8,7 @@
 #include "serial.h"
 #include "menu.h"
 #include "editor.h"
+#include "solver.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -106,6 +107,7 @@ static Command poll_command(Screen screen) {
         if (IsKeyPressed(KEY_X)) return CMD_WIDER;
         if (IsKeyPressed(KEY_C)) return CMD_SHORTER;
         if (IsKeyPressed(KEY_V)) return CMD_TALLER;
+        if (IsKeyPressed(KEY_H)) return CMD_SOLVE;
         if (IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_KP_ENTER)) return CMD_SAVE;
     }
 
@@ -170,6 +172,21 @@ int main(void) {
                     if (cmd == CMD_DOWN)  dy = 1;
                     if (cmd == CMD_LEFT)  dx = -1;
                     if (cmd == CMD_RIGHT) dx = 1;
+                    if (cmd == CMD_SOLVE) {
+                        // Hint: first move of the shortest solution. It goes through
+                        // the normal move code below, so undo/redo just work.
+                        Solution sol = solver_solve(&lv);
+                        if (sol.solved && sol.count > 0) {
+                            switch (sol.moves[0]) {
+                                case CMD_UP:    dy = -1; break;
+                                case CMD_DOWN:  dy =  1; break;
+                                case CMD_LEFT:  dx = -1; break;
+                                case CMD_RIGHT: dx =  1; break;
+                                default: break;
+                            }
+                        }
+                        solver_free_solution(&sol);
+                    }
 
                     if (dx != 0 || dy != 0) {
                         Level before = lv;
@@ -185,6 +202,7 @@ int main(void) {
                     Level prev;
                     if (stack_pop(&undo, &prev)) { stack_push(&redo, &lv); lv = prev; }
                 }
+                
                 if (cmd == CMD_REDO) {
                     Level next;
                     if (stack_pop(&redo, &next)) { stack_push(&undo, &lv); lv = next; }
