@@ -5,26 +5,25 @@
 #include "input.h"
 #include <stdbool.h>
 
-// Why the solver stopped
+// Solver result.
 typedef enum {
-    SOLVE_FOUND,        // a solution was found (shortest in moves)
-    SOLVE_UNWINNABLE,   // every reachable state was searched: no solution exists
-    SOLVE_TOO_BIG,      // gave up at the search limit: unknown, might still be winnable
-    SOLVE_ERROR         // out of memory
+    SOLVE_FOUND,        // A solution was found.
+    SOLVE_UNWINNABLE,   // No solution exists.
+    SOLVE_TOO_BIG,      // Search limit reached; result unknown.
+    SOLVE_ERROR         // Not enough memory.
 } SolveStatus;
 
 typedef struct {
     Command *moves;
     int count;
-    bool solved;            // same as status == SOLVE_FOUND
+    bool solved;            // True when a solution was found.
     SolveStatus status;
 } Solution;
 
-// Finds the shortest path to solve the level from its CURRENT state (so it also
-// tells you when the player has made a move that can no longer be recovered from).
+// Finds the shortest solution from the current level state.
 Solution solver_solve(const Level *initial_level);
 
-// Frees the allocated moves in the solution
+// Frees the solution moves.
 void solver_free_solution(Solution *sol);
 
-#endif // SOLVER_H
+#endif

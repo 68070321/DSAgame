@@ -13,7 +13,7 @@ bool level_load(Level *lv, const char *path) {
 
     char line[256];
     while (lv->height < MAX_H && fgets(line, sizeof(line), f)) {
-        line[strcspn(line, "\r\n")] = '\0';        // strip newline
+        line[strcspn(line, "\r\n")] = '\0';
         int len = (int)strlen(line);
         if (len > MAX_W) len = MAX_W;
         for (int x = 0; x < len; x++) {
@@ -27,7 +27,7 @@ bool level_load(Level *lv, const char *path) {
         lv->height++;
     }
     fclose(f);
-    return lv->height > 0 && lv->player_x >= 0;    // must have a player
+    return lv->height > 0 && lv->player_x >= 0;    // A level needs a player.
 }
 
 bool level_save(const Level *lv, const char *path) {
@@ -36,11 +36,11 @@ bool level_save(const Level *lv, const char *path) {
 
     bool ok = true;
     for (int y = 0; y < lv->height; y++) {
-        // every row is written at full width so the map keeps its size
+        // Write each row at full width to keep the map size.
         if (fwrite(lv->grid[y], 1, (size_t)lv->width, f) != (size_t)lv->width) ok = false;
         if (fputc('\n', f) == EOF) ok = false;
     }
-    if (fclose(f) != 0) ok = false;                // fclose flushes the data to disk
+    if (fclose(f) != 0) ok = false;
     return ok;
 }
 

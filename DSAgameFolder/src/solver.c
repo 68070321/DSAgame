@@ -4,20 +4,16 @@
 #include "solver.h"
 #include "game.h"
 
-// Limits keep the game responsive: the solver runs synchronously, so a huge
-// search would freeze the window. When exceeded, the level counts as "unsolved".
+// Search limits keep the game responsive.
 #define MAX_NODES   400000
-#define HASH_SIZE   (1 << 20)          // power of two, > 2 * MAX_NODES
+#define HASH_SIZE   (1 << 20)
 #define EMPTY_SLOT  (-1)
 
-// One BFS state. Nodes are stored in a growable array that doubles as the queue
-// (nodes are appended in BFS order and consumed from `head`). Instead of every
-// node carrying its own copy of the path, it stores just its parent and the move
-// that led to it, and the path is rebuilt once at the end.
+// Each search state stores the move and its parent.
 typedef struct {
     Level   state;
-    int     parent;     // index of the parent node, -1 for the root
-    Command cmd;        // move taken from the parent to get here
+    int     parent;     // Previous state, or -1 for the start.
+    Command cmd;        // Move to reach this state.
 } Node;
 
 static const struct { int dx; int dy; Command cmd; } DIRS[] = {
@@ -29,10 +25,9 @@ static const struct { int dx; int dy; Command cmd; } DIRS[] = {
 
 static bool is_box(char c) { return c == '$' || c == '*'; }
 
-// A box on a non-goal tile with walls on two perpendicular sides can never move
-// again. Out-of-bounds counts as wall.
+// Checks whether a box is stuck in a corner.
 static bool is_corner_deadlock(const Level *lv, int x, int y) {
-    if (lv->grid[y][x] != '$') return false;     // '*' is on a goal: fine
+    if (lv->grid[y][x] != '$') return false;
 
     bool up    = (y <= 0)            || lv->grid[y - 1][x] == '#';
     bool down  = (y >= lv->height - 1) || lv->grid[y + 1][x] == '#';
@@ -42,9 +37,7 @@ static bool is_corner_deadlock(const Level *lv, int x, int y) {
     return (up && left) || (up && right) || (down && left) || (down && right);
 }
 
-// FNV-1a over the whole grid. The player is part of the grid ('@' / '+'), so
-// grid contents alone identify a state. Unused cells are always ' ' (level_load
-// memsets the grid), so hashing and comparing the full array is safe.
+// Hashes the grid to identify a search state.
 static unsigned int hash_grid(const Level *lv) {
     const unsigned char *p = (const unsigned char *)lv->grid;
     unsigned int h = 2166136261u;
@@ -55,8 +48,7 @@ static unsigned int hash_grid(const Level *lv) {
     return h;
 }
 
-// Open-addressing set of node indices. Returns true if the state was already
-// present; otherwise records it as node `new_index` and returns false.
+// Tracks states that have already been searched.
 static bool visit_if_new(int *table, const Node *nodes, const Level *lv, int new_index) {
     unsigned int slot = hash_grid(lv) & (HASH_SIZE - 1);
     while (table[slot] != EMPTY_SLOT) {
@@ -86,8 +78,8 @@ Solution solver_solve(const Level *initial_level) {
     sol.status = SOLVE_UNWINNABLE;
     for (int i = 0; i < HASH_SIZE; i++) table[i] = EMPTY_SLOT;
 
-    int count = 0;      // nodes stored so far (tail of the queue)
-    int head  = 0;      // next node to expand
+    int count = 0;
+    int head  = 0;
 
     nodes[0].state  = *initial_level;
     nodes[0].parent = -1;
@@ -108,7 +100,7 @@ Solution solver_solve(const Level *initial_level) {
         for (int i = 0; i < 4; i++) {
             Level next = nodes[cur].state;
 
-            // Is the player about to push a box? If so, remember where it ends up.
+            // Remember the box's new position after a push.
             int nx = next.player_x + DIRS[i].dx;
             int ny = next.player_y + DIRS[i].dy;
             bool pushing = nx >= 0 && ny >= 0 && nx < next.width && ny < next.height
@@ -116,13 +108,13 @@ Solution solver_solve(const Level *initial_level) {
 
             if (!game_move(&next, DIRS[i].dx, DIRS[i].dy)) continue;
 
-            // Only a pushed box can have become newly stuck.
+            // Only check a box after it moves.
             if (pushing && is_corner_deadlock(&next, nx + DIRS[i].dx, ny + DIRS[i].dy))
                 continue;
 
             if (count >= MAX_NODES) {
                 sol.status = SOLVE_TOO_BIG;
-                goto done;                          // out of budget: give up
+                goto done;
             }
 
             nodes[count].state = next;
@@ -136,14 +128,14 @@ Solution solver_solve(const Level *initial_level) {
 
 done:
     if (found >= 0) {
-        // Walk back to the root to count, then fill the move list in order.
+        // Rebuild the moves by following parent states.
         int len = 0;
         for (int n = found; nodes[n].parent != -1; n = nodes[n].parent) len++;
 
         sol.count  = len;
         if (len > 0) {
             sol.moves = malloc(sizeof(Command) * (size_t)len);
-            if (!sol.moves) {                       // out of memory: report failure
+            if (!sol.moves) {
                 sol.count  = 0;
                 sol.status = SOLVE_ERROR;
             } else {

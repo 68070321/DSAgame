@@ -7,8 +7,8 @@
 #define AREA_BOTTOM 470
 
 void ui_draw_grid(const Level *lv, int ox, int oy, int tile) {
-    int inset = tile / 8;                       // box margin inside its cell
-    int goal_r = tile / 8 < 3 ? 3 : tile / 8;   // goal dot radius
+    int inset = tile / 8;
+    int goal_r = tile / 8 < 3 ? 3 : tile / 8;
 
     for (int y = 0; y < lv->height; y++) {
         for (int x = 0; x < lv->width; x++) {
@@ -20,15 +20,15 @@ void ui_draw_grid(const Level *lv, int ox, int oy, int tile) {
                 DrawRectangle(px, py, tile, tile, DARKGRAY);
                 continue;
             }
-            DrawRectangle(px, py, tile, tile, LIGHTGRAY);        // floor
+            DrawRectangle(px, py, tile, tile, LIGHTGRAY);
             DrawRectangleLines(px, py, tile, tile, GRAY);
 
-            if (c == '.' || c == '*' || c == '+')                // goal marker
+            if (c == '.' || c == '*' || c == '+')
                 DrawCircle(px + tile / 2, py + tile / 2, goal_r, RED);
-            if (c == '$' || c == '*')                            // box
+            if (c == '$' || c == '*')
                 DrawRectangle(px + inset, py + inset, tile - 2 * inset, tile - 2 * inset,
                               c == '*' ? GREEN : BROWN);
-            if (c == '@' || c == '+')                            // player
+            if (c == '@' || c == '+')
                 DrawCircle(px + tile / 2, py + tile / 2, tile / 3, BLUE);
         }
     }
@@ -45,7 +45,6 @@ void ui_draw(const Level *lv) {
 
     ui_draw_grid(lv, ox, oy, TILE);
 
-    // move counter above the map, hint below it, both lined up with the map
     DrawText(TextFormat("Moves: %d", lv->moves), ox, oy - 30, 24, DARKGRAY);
     DrawText("Arrows/WASD: move   R: restart", ox, oy + map_h + 12, 20, GRAY);
 }
@@ -58,7 +57,7 @@ bool ui_button(int x, int y, int w, int h, const char *label, bool focused, bool
     DrawRectangleRec(r, fill);
     DrawRectangleLinesEx(r, 2, (focused && enabled) ? BLUE : GRAY);
 
-    int size = h * 5 / 9;                       // text size follows the button height
+    int size = h * 5 / 9;
     if (size > 24) size = 24;
     int tw = MeasureText(label, size);
     DrawText(label, x + (w - tw) / 2, y + (h - size) / 2, size, enabled ? DARKGRAY : GRAY);

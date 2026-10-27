@@ -1,14 +1,6 @@
 #include "input.h"
 
-// Keypad layout in the game and menus (4x4 membrane keypad):
-//
-//      1   [2 up]     3    [A undo]
-//   [4 left] 5   [6 right] [B redo]
-//   [7 prev] [8 down] [9 next] [C restart]
-//   [* levels] [0 back] [# confirm] [D solve]
-//
-// Changing the layout only means editing these tables. The Arduino just sends
-// the raw key, so it never needs to be reflashed.
+// Key mappings for the game and menus.
 Command input_from_key(int c) {
     switch (c) {
         case '2': return CMD_UP;
@@ -28,13 +20,7 @@ Command input_from_key(int c) {
     }
 }
 
-// Keypad layout inside the level editor. The movement keys stay the same, and
-// the tools sit on the odd digits so they surround the arrow cross:
-//
-//   [1 wall]   [2 up]     [3 box]     [A narrower]
-//   [4 left]   [5 goal]   [6 right]   [B wider]
-//   [7 start]  [8 down]   [9 erase]   [C shorter]
-//   [* check]  [0 back]   [# save]    [D taller]
+// Key mappings for the level editor.
 Command input_from_key_editor(int c) {
     switch (c) {
         case '2': return CMD_UP;

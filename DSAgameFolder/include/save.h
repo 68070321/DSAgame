@@ -3,16 +3,14 @@
 #include <stdbool.h>
 
 typedef struct {
-    int unlocked;   // highest level index (0-based) the player may play
-    int last;       // level index (0-based) the player opened most recently
+    int unlocked;   // Highest level the player can play.
+    int last;       // Last level the player opened.
 } SaveData;
 
-// Reads save.txt. A missing or unreadable file gives {0, 0}.
-// Old save files that hold only the unlocked level still load fine.
-// Values are clamped to 0..num_levels-1, and last is never above unlocked.
+// Loads saved progress. Missing files start at level 0.
 SaveData save_load(const char *path, int num_levels);
 
-// Writes the save data to save.txt. Returns false on failure.
+// Saves progress and returns false if saving fails.
 bool save_write(const char *path, const SaveData *data);
 
 #endif

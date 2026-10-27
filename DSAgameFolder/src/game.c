@@ -20,12 +20,10 @@ bool game_move(Level *lv, int dx, int dy) {
         char beyond = lv->grid[by][bx];
         if (beyond == '#' || is_box(beyond)) return false;
 
-        // push the box
         lv->grid[by][bx] = is_goal(beyond) ? '*' : '$';
         lv->grid[ny][nx] = is_goal(target) ? '.' : ' ';
     }
 
-    // move the player
     lv->grid[py][px] = (lv->grid[py][px] == '+') ? '.' : ' ';
     lv->grid[ny][nx] = is_goal(lv->grid[ny][nx]) ? '+' : '@';
     lv->player_x = nx;
@@ -37,6 +35,6 @@ bool game_move(Level *lv, int dx, int dy) {
 bool game_is_won(const Level *lv) {
     for (int y = 0; y < lv->height; y++)
         for (int x = 0; x < lv->width; x++)
-            if (lv->grid[y][x] == '$') return false;   // a box not on a goal
+            if (lv->grid[y][x] == '$') return false;
     return true;
 }

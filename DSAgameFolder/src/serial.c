@@ -1,6 +1,4 @@
-// Windows serial port access.
-// NOTE: windows.h clashes with raylib.h (both define things like Rectangle and
-// CloseWindow), so this file must never include raylib.h. serial.h is clean.
+// Keep raylib.h out of this file because it conflicts with windows.h.
 #include "serial.h"
 #include <windows.h>
 #include <stdio.h>
@@ -8,13 +6,13 @@
 static HANDLE g_port = INVALID_HANDLE_VALUE;
 
 bool serial_open(const char *port, int baud) {
-    // the "\\.\" prefix is required for COM10 and above, and harmless below that
+    // This prefix supports COM ports numbered 10 and above.
     char path[32];
     snprintf(path, sizeof(path), "\\\\.\\%s", port);
 
     g_port = CreateFileA(path, GENERIC_READ | GENERIC_WRITE, 0, NULL,
                          OPEN_EXISTING, 0, NULL);
-    if (g_port == INVALID_HANDLE_VALUE) return false;   // missing, or in use
+    if (g_port == INVALID_HANDLE_VALUE) return false;
 
     DCB dcb;
     ZeroMemory(&dcb, sizeof(dcb));
@@ -25,14 +23,12 @@ bool serial_open(const char *port, int baud) {
     dcb.ByteSize = 8;
     dcb.Parity   = NOPARITY;
     dcb.StopBits = ONESTOPBIT;
-    // Boards with native USB (Uno R4, Leonardo) can stay silent until the PC
-    // raises DTR, so switch it on explicitly. Harmless on a classic Uno.
+    // Some boards need DTR enabled before sending data.
     dcb.fDtrControl = DTR_CONTROL_ENABLE;
     dcb.fRtsControl = RTS_CONTROL_ENABLE;
     if (!SetCommState(g_port, &dcb)) { serial_close(); return false; }
 
-    // MAXDWORD / 0 / 0 makes ReadFile return immediately with whatever has
-    // arrived, so the game loop never waits for the Arduino
+    // Return immediately if no serial data is waiting.
     COMMTIMEOUTS timeouts;
     ZeroMemory(&timeouts, sizeof(timeouts));
     timeouts.ReadIntervalTimeout = MAXDWORD;

@@ -4,40 +4,39 @@
 #include "input.h"
 #include "level.h"
 
-// What a tool does to the cell under the cursor
+// Editor tools.
 typedef enum {
-    TOOL_WALL,      // toggle a wall
-    TOOL_BOX,       // toggle a box
-    TOOL_GOAL,      // toggle a goal
-    TOOL_START,     // move the player start here
-    TOOL_ERASE      // clear the cell
+    TOOL_WALL,      // Toggle a wall.
+    TOOL_BOX,       // Toggle a box.
+    TOOL_GOAL,      // Toggle a goal.
+    TOOL_START,     // Set the player start.
+    TOOL_ERASE      // Clear the cell.
 } Tool;
 
 typedef struct {
-    Level lv;           // the level being edited
-    int index;          // level file number (0-based): 0 is level01.txt
-    bool is_new;        // true until the level has been saved once
-    int cx, cy;         // cursor cell
-    Tool brush;         // tool a mouse click applies
-    bool dirty;         // unsaved changes
-    bool back_armed;    // true after the "unsaved changes" warning was shown
-    bool status_error;  // status message is an error (red) or a note (green)
+    Level lv;           // Level being edited.
+    int index;          // Level file index.
+    bool is_new;        // True until first save.
+    int cx, cy;         // Cursor position.
+    Tool brush;         // Selected tool.
+    bool dirty;         // Has unsaved changes.
+    bool back_armed;    // Warning was shown.
+    bool status_error;  // Status message is an error.
     char status[96];
 } Editor;
 
 typedef enum {
     EDITOR_STAY,
-    EDITOR_EXIT         // the player left the editor
+    EDITOR_EXIT         // The player left the editor.
 } EditorResult;
 
-// Starts a blank new level that will be saved as level number index + 1.
+// Starts a new blank level.
 void editor_new(Editor *ed, int index);
 
-// Opens an existing level file for editing.
+// Opens an existing level.
 void editor_edit(Editor *ed, int index);
 
-// Handles input and draws the editor. Call once per frame between
-// BeginDrawing() and EndDrawing().
+// Handles input and draws the editor once per frame.
 EditorResult editor_run(Editor *ed, Command cmd);
 
 #endif

@@ -5,10 +5,10 @@
 
 #define MAX_W 20
 #define MAX_H 20
-#define MAX_LEVELS 25   // the level tables have room for 5 rows of 5 buttons
+#define MAX_LEVELS 25   // Maximum number of levels
 
 typedef struct {
-    char grid[MAX_H][MAX_W];  // '#' wall, ' ' floor, '.' goal, '$' box, '@' player, '*' box on goal, '+' player on goal
+    char grid[MAX_H][MAX_W];  // Map symbols show walls, goals, boxes and the player.
     int width, height;
     int player_x, player_y;
     int moves;
@@ -16,14 +16,13 @@ typedef struct {
 
 bool level_load(Level *lv, const char *path);
 
-// Writes the level as a text file (one line per row). Returns false on failure.
+// Saves a level to a file.
 bool level_save(const Level *lv, const char *path);
 
-// Builds the file name of a level: index 0 gives "levels/level01.txt".
+// Builds the file name for a level.
 void level_path(int index, char *out, size_t size);
 
-// Counts the level files: level01.txt, level02.txt, ... It stops at the first
-// missing number, and at MAX_LEVELS.
+// Counts the level files.
 int level_count(void);
 
 #endif

@@ -3,17 +3,17 @@
 #include <stdbool.h>
 #include "level.h"
 
-// A stack of Level snapshots (last in, first out). Grows automatically.
+// Stack of level snapshots used for undo and redo.
 typedef struct {
     Level *items;
-    int top;        // number of snapshots stored
-    int capacity;   // how many fit before it must grow
+    int top;        // Number of saved levels.
+    int capacity;   // Stack size.
 } Stack;
 
 void stack_init(Stack *s);
 void stack_free(Stack *s);
-void stack_clear(Stack *s);                       // forget everything, keep memory
-bool stack_push(Stack *s, const Level *lv);       // false if out of memory
-bool stack_pop(Stack *s, Level *out);             // false if the stack is empty
+void stack_clear(Stack *s);                       // Removes all saved levels.
+bool stack_push(Stack *s, const Level *lv);       // Saves a level.
+bool stack_pop(Stack *s, Level *out);             // Gets the last saved level.
 
 #endif

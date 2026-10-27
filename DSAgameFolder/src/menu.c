@@ -4,24 +4,22 @@
 
 #define MAIN_ITEMS 4
 
-// Level-select table layout
 #define COLS     5
 #define CELL_W   100
 #define CELL_H   70
 #define GAP      20
 #define GRID_TOP 110
 
-static int main_sel = 0;     // highlighted item in the main menu
-static int level_sel = 0;    // highlighted cell in the level table
-static int confirm_sel = 0;  // 0 = No, 1 = Yes
+static int main_sel = 0;
+static int level_sel = 0;
+static int confirm_sel = 0;
 
 static bool button(Rectangle r, const char *label, bool focused, bool enabled) {
     return ui_button((int)r.x, (int)r.y, (int)r.width, (int)r.height,
                      label, focused, enabled);
 }
 
-// Only let the mouse steal the highlight when it actually moves, otherwise a
-// resting mouse would fight with the keypad.
+// Only move focus with the mouse when it moves.
 static bool mouse_moved(void) {
     Vector2 d = GetMouseDelta();
     return d.x != 0 || d.y != 0;
@@ -38,12 +36,11 @@ MenuAction menu_main(Command cmd, bool can_continue) {
     const bool enabled[MAIN_ITEMS] = { can_continue, true, true, true };
     int w = GetScreenWidth();
 
-    // never rest on a greyed-out item
+    // Skip disabled menu items.
     if (!enabled[main_sel]) main_sel = 1;
 
-    // up / down skip greyed-out items
     int step = 0;
-    if (cmd == CMD_UP)   step = MAIN_ITEMS - 1;     // same as -1 with the wrap-around
+    if (cmd == CMD_UP)   step = MAIN_ITEMS - 1;
     if (cmd == CMD_DOWN) step = 1;
     if (step != 0) {
         do {
@@ -77,14 +74,14 @@ int menu_level_select(Command cmd, const char *title, int num_levels,
                       int unlocked, bool allow_add) {
     int w = GetScreenWidth();
 
-    int last_open = unlocked;                       // highest level that can be opened
+    int last_open = unlocked;
     if (last_open > num_levels - 1) last_open = num_levels - 1;
-    int max_sel = allow_add ? num_levels : last_open;   // the "+" comes right after the last level
+    int max_sel = allow_add ? num_levels : last_open;
     if (max_sel < 0) max_sel = 0;
     if (level_sel > max_sel) level_sel = max_sel;
     if (level_sel < 0) level_sel = 0;
 
-    // Keypad / keyboard cursor: moves through the table, open cells only
+    // The cursor can only select unlocked levels.
     int next = level_sel;
     if (cmd == CMD_LEFT)  next = level_sel - 1;
     if (cmd == CMD_RIGHT) next = level_sel + 1;
@@ -147,7 +144,7 @@ int menu_confirm(Command cmd, const char *question) {
 
     if (cmd == CMD_CONFIRM) answer = confirm_sel;
     if (cmd == CMD_BACK)    answer = 0;
-    if (answer != CONFIRM_PENDING) confirm_sel = 0;     // next time start on "No"
+    if (answer != CONFIRM_PENDING) confirm_sel = 0;
 
     draw_hint("4/6 or arrows: choose     # or Enter: confirm     0 or Esc: no");
     return answer;

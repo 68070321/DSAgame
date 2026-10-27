@@ -7,11 +7,11 @@
 #include <stdio.h>
 #include <string.h>
 
-#define NEW_W    10         // size of a brand new level
+#define NEW_W    10         // Width of a new level.
 #define NEW_H    8
 #define MIN_SIZE 3
 
-// Where the map is drawn (left part of the window) and where the tool panel is
+// Map and tool panel positions.
 #define GRID_X 20
 #define GRID_Y 56
 #define GRID_W 580
@@ -19,9 +19,7 @@
 #define PANEL_X 620
 #define PANEL_W 160
 
-// A cell is a stack of layers. Splitting the map characters into layers makes
-// the tools easy: a goal and a box can sit on the same cell, and so can a goal
-// and the player.
+// Separate layers let boxes and the player sit on goals.
 typedef struct {
     bool wall, goal, box, player;
 } Cell;
@@ -50,7 +48,7 @@ static void set_status(Editor *ed, bool error, const char *fmt, ...) {
     ed->status_error = error;
 }
 
-// Walls all around, empty floor inside, the player in the top-left corner.
+// Makes a blank level with a wall border.
 static void blank_level(Level *lv) {
     memset(lv->grid, ' ', sizeof(lv->grid));
     lv->width = NEW_W;
@@ -94,7 +92,7 @@ void editor_edit(Editor *ed, int index) {
     }
 }
 
-// Applies a tool to the cell under the cursor.
+// Applies the selected tool to one cell.
 static void apply_tool(Editor *ed, Tool tool) {
     Level *lv = &ed->lv;
     char *cell = &lv->grid[ed->cy][ed->cx];
@@ -127,9 +125,8 @@ static void apply_tool(Editor *ed, Tool tool) {
 
         case TOOL_START:
             if (k.wall || k.box) { set_status(ed, true, "The start can't go there"); return; }
-            if (k.player) return;                       // already the start
+            if (k.player) return;
             {
-                // take the start away from its old cell
                 char *old = &lv->grid[lv->player_y][lv->player_x];
                 Cell o = cell_decode(*old);
                 o.player = false;
@@ -145,7 +142,7 @@ static void apply_tool(Editor *ed, Tool tool) {
                 k.wall = false;
             } else {
                 k.box = false;
-                k.goal = false;                         // the start stays
+                k.goal = false;
             }
             break;
     }
@@ -169,7 +166,7 @@ static void resize(Editor *ed, int dw, int dh) {
         return;
     }
 
-    // keep everything outside the map empty, so growing again gives clean floor
+    // Clears cells outside the map so expanding it adds empty floor.
     for (int y = 0; y < MAX_H; y++)
         for (int x = 0; x < MAX_W; x++)
             if (x >= nw || y >= nh) lv->grid[y][x] = ' ';
@@ -183,7 +180,7 @@ static void resize(Editor *ed, int dw, int dh) {
     set_status(ed, false, "Size: %d x %d", nw, nh);
 }
 
-// Basic rules a level must follow. Returns true and fills `msg` if something is wrong.
+// Checks the basic level rules.
 static bool level_problem(const Level *lv, char *msg, size_t size) {
     int boxes = 0, goals = 0, unsolved = 0;
 
@@ -207,8 +204,7 @@ static bool level_problem(const Level *lv, char *msg, size_t size) {
     return true;
 }
 
-// Runs the solver on the level as it is now. Shows the result in the status bar
-// and returns it. The search can take a moment on big or open maps.
+// Checks if the current level can be solved.
 static SolveStatus check_level(Editor *ed, bool announce) {
     char problem[64];
     if (level_problem(&ed->lv, problem, sizeof(problem))) {
@@ -240,8 +236,7 @@ static SolveStatus check_level(Editor *ed, bool announce) {
     return status;
 }
 
-// Checks that the level follows the rules, then writes the file. A level that
-// can't be won is still saved (it may be half finished) but with a loud warning.
+// Checks the level, then saves it even if it cannot be solved.
 static void save_level(Editor *ed) {
     char problem[64];
     ed->back_armed = false;
@@ -276,8 +271,7 @@ static void save_level(Editor *ed) {
     }
 }
 
-// Returns true if it is fine to leave. With unsaved changes the first try only
-// shows a warning, and a second try discards them.
+// Shows a warning before leaving with unsaved changes.
 static bool try_leave(Editor *ed) {
     if (!ed->dirty || ed->back_armed) return true;
     ed->back_armed = true;
@@ -289,10 +283,9 @@ EditorResult editor_run(Editor *ed, Command cmd) {
     Level *lv = &ed->lv;
     EditorResult result = EDITOR_STAY;
 
-    // ---------- check key (read here so no other file needs a new command) ----------
+    // Checks the editor's extra keypad key.
     if (IsKeyPressed(KEY_T)) check_level(ed, true);
 
-    // ---------- keypad / keyboard ----------
     switch (cmd) {
         case CMD_UP:       if (ed->cy > 0) ed->cy--; break;
         case CMD_DOWN:     if (ed->cy < lv->height - 1) ed->cy++; break;
@@ -313,7 +306,6 @@ EditorResult editor_run(Editor *ed, Command cmd) {
         default: break;
     }
 
-    // ---------- map position (shrinks the tiles for big maps) ----------
     int tile = GRID_W / lv->width;
     int tile_h = GRID_H / lv->height;
     if (tile_h < tile) tile = tile_h;
@@ -321,7 +313,6 @@ EditorResult editor_run(Editor *ed, Command cmd) {
     int ox = GRID_X + (GRID_W - tile * lv->width) / 2;
     int oy = GRID_Y + (GRID_H - tile * lv->height) / 2;
 
-    // ---------- mouse: click a cell to apply the selected tool ----------
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
         Vector2 m = GetMousePosition();
         if (m.x >= ox && m.y >= oy &&
@@ -332,7 +323,6 @@ EditorResult editor_run(Editor *ed, Command cmd) {
         }
     }
 
-    // ---------- draw the map and the cursor ----------
     DrawText(TextFormat("Level Editor - level %d%s%s", ed->index + 1,
                         ed->is_new ? " (new)" : "", ed->dirty ? " *" : ""),
              20, 14, 26, DARKGRAY);
@@ -341,7 +331,6 @@ EditorResult editor_run(Editor *ed, Command cmd) {
     DrawRectangleLinesEx((Rectangle){ (float)(ox + ed->cx * tile), (float)(oy + ed->cy * tile),
                                       (float)tile, (float)tile }, 3, ORANGE);
 
-    // ---------- tool panel ----------
     static const char *tool_names[5] = {
         "Wall (1)", "Box (3)", "Goal (5)", "Start (7)", "Erase (9)"
     };
@@ -366,7 +355,6 @@ EditorResult editor_run(Editor *ed, Command cmd) {
     if (ui_button(PANEL_X, 436, PANEL_W, 36, "Back (0)", false, true))
         if (try_leave(ed)) result = EDITOR_EXIT;
 
-    // ---------- hints and status ----------
     DrawText("Keypad: 2/4/6/8 move  1 wall  3 box  5 goal  7 start  9 erase", 20, 482, 18, GRAY);
     DrawText("A/B width -/+  C/D height -/+  # save  0 back  (keyboard: Z/X, C/V, Enter)",
              20, 504, 18, GRAY);

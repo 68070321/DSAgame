@@ -17,7 +17,7 @@ void stack_clear(Stack *s) {
 }
 
 bool stack_push(Stack *s, const Level *lv) {
-    if (s->top == s->capacity) {                       // full: double the size
+    if (s->top == s->capacity) {                       // Grow the stack when full.
         int new_cap = s->capacity ? s->capacity * 2 : 16;
         Level *p = realloc(s->items, (size_t)new_cap * sizeof(Level));
         if (!p) return false;

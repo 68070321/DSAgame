@@ -13,33 +13,32 @@
 #include <stdio.h>
 #include <string.h>
 
-#define BAUD_RATE 9600          // must match Serial.begin() in the Arduino sketch
+#define BAUD_RATE 9600          // Must match the Arduino baud rate.
 
-// Which screen the game is showing
+// Screens shown by the game.
 typedef enum {
     SCREEN_MENU,
-    SCREEN_LEVELS,          // level select (player)
+    SCREEN_LEVELS,
     SCREEN_PLAY,
-    SCREEN_CONFIRM_NEW,     // "erase progress?" question
-    SCREEN_EDIT_SELECT,     // level table of the editor
-    SCREEN_EDIT             // editing one level
+    SCREEN_CONFIRM_NEW,
+    SCREEN_EDIT_SELECT,
+    SCREEN_EDIT
 } Screen;
 
-// Save data lives here so every helper can reach it
-static SaveData g_save;                 // unlocked level + last played level
+static SaveData g_save;
 static char g_save_path[512];
-static bool g_save_ok = true;           // false if the last save attempt failed
+static bool g_save_ok = true;
 
 static void persist(void) {
     g_save_ok = save_write(g_save_path, &g_save);
 }
 
-// "Continue" is only available once the player has made some progress
+// Continue is available after the player makes progress.
 static bool has_progress(void) {
     return g_save.unlocked > 0 || g_save.last > 0;
 }
 
-// Loads a level and forgets the old undo/redo history
+// Loads a level and clears undo and redo history.
 static bool load_level(Level *lv, int index, Stack *undo, Stack *redo) {
     char path[64];
     stack_clear(undo);
@@ -48,22 +47,20 @@ static bool load_level(Level *lv, int index, Stack *undo, Stack *redo) {
     return level_load(lv, path);
 }
 
-// Opens a level from the level select (or prev/next): remembers it as the
-// last played level in the save file, then loads it.
+// Saves the selected level as the last played level, then loads it.
 static bool start_level(Level *lv, int index, Stack *undo, Stack *redo) {
     g_save.last = index;
     persist();
     return load_level(lv, index, undo, redo);
 }
 
-// Wipes the progress and starts level 1
+// Clears progress and starts the first level.
 static bool new_game(Level *lv, Stack *undo, Stack *redo) {
     g_save.unlocked = 0;
-    return start_level(lv, 0, undo, redo);      // also resets "last" and saves
+    return start_level(lv, 0, undo, redo);
 }
 
-// Reads the port name (for example COM5) from port.txt next to the exe.
-// Falls back to COM3 if the file is missing.
+// Reads the serial port from port.txt, or uses COM3 if the file is missing.
 static void read_port_name(char *out, size_t size) {
     snprintf(out, size, "COM3");
     FILE *f = fopen("port.txt", "r");
@@ -71,24 +68,22 @@ static void read_port_name(char *out, size_t size) {
 
     char buf[32];
     if (fgets(buf, sizeof(buf), f)) {
-        char *p = buf + strspn(buf, " \t");         // skip leading spaces/tabs
-        p[strcspn(p, " \t\r\n")] = '\0';            // trim at first whitespace
+        char *p = buf + strspn(buf, " \t");
+        p[strcspn(p, " \t\r\n")] = '\0';
         if (p[0] != '\0') snprintf(out, size, "%s", p);
     }
     fclose(f);
 }
 
-// Builds the full path of save.txt inside the folder that contains the .exe, so
-// the save file is the same no matter which folder the game was started from.
+// Keeps save.txt next to the game, wherever it was started from.
 static void build_save_path(char *out, size_t size) {
-    const char *dir = GetApplicationDirectory();    // normally ends with a slash
+    const char *dir = GetApplicationDirectory();
     size_t n = strlen(dir);
     const char *sep = (n > 0 && (dir[n - 1] == '/' || dir[n - 1] == '\\')) ? "" : "/";
     snprintf(out, size, "%s%ssave.txt", dir, sep);
 }
 
-// The editor uses a different keypad layout, so poll_command needs to know
-// which screen is showing.
+// Uses the editor's key layout while the editor is open.
 static Command poll_command(Screen screen) {
     int c;
     while ((c = serial_read_key()) != -1) {
@@ -111,7 +106,6 @@ static Command poll_command(Screen screen) {
         if (IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_KP_ENTER)) return CMD_SAVE;
     }
 
-    //can play with keyboard too
     if (IsKeyPressed(KEY_UP)    || IsKeyPressed(KEY_W)) return CMD_UP;
     if (IsKeyPressed(KEY_DOWN)  || IsKeyPressed(KEY_S)) return CMD_DOWN;
     if (IsKeyPressed(KEY_LEFT)  || IsKeyPressed(KEY_A)) return CMD_LEFT;
@@ -131,7 +125,7 @@ static Command poll_command(Screen screen) {
 int main(void) {
     const char *hint_msg = "";
     InitWindow(800, 600, "Sokoban Studio");
-    SetExitKey(KEY_NULL);               // Esc means "back" now, it must not close the window
+    SetExitKey(KEY_NULL);               // Escape goes back instead of closing.
     SetTargetFPS(60);
 
     build_save_path(g_save_path, sizeof(g_save_path));
@@ -145,12 +139,12 @@ int main(void) {
     stack_init(&undo);
     stack_init(&redo);
 
-    int num_levels = level_count();     // how many levelNN.txt files exist
+    int num_levels = level_count();
     g_save = save_load(g_save_path, num_levels > 0 ? num_levels : 1);
-    int current = g_save.last;          // level being played (or last played)
+    int current = g_save.last;
     Level lv;
-    bool loaded = false;                // becomes true once the player picks a level
-    Editor ed;                          // filled in when the editor opens a level
+    bool loaded = false;
+    Editor ed;
 
     Screen screen = SCREEN_MENU;
     bool quit = false;
@@ -158,16 +152,14 @@ int main(void) {
     while (!quit && !WindowShouldClose()) {
         Command cmd = poll_command(screen);
         bool won = false;
-        bool go_levels = false;         // set by key or button, handled after drawing
+        bool go_levels = false;
 
-        // ---------- update the level being played ----------
         if (screen == SCREEN_PLAY) {
             if (cmd == CMD_LEVELS || cmd == CMD_BACK) go_levels = true;
 
             if (loaded) {
                 won = game_is_won(&lv);
 
-                // movement is locked once the level is solved
                 if (!won) {
                     int dx = 0, dy = 0;
                     if (cmd == CMD_UP)    dy = -1;
@@ -211,7 +203,6 @@ int main(void) {
                     }
                 }
 
-                // undo / redo still work after a win
                 if (cmd == CMD_UNDO) {
                     Level prev;
                     if (stack_pop(&undo, &prev)) { stack_push(&redo, &lv); lv = prev; }
@@ -224,13 +215,11 @@ int main(void) {
                 if (cmd == CMD_RESTART)
                     loaded = load_level(&lv, current, &undo, &redo);
 
-                // next level after a win
                 if (won && cmd == CMD_CONFIRM && current + 1 < num_levels) {
                     current++;
                     loaded = start_level(&lv, current, &undo, &redo);
                 }
 
-                // replay an earlier level, or go forward to one already unlocked
                 if (cmd == CMD_PREV && current > 0) {
                     current--;
                     loaded = start_level(&lv, current, &undo, &redo);
@@ -241,18 +230,16 @@ int main(void) {
                 }
             }
 
-            won = loaded && game_is_won(&lv);   // recompute after input
+            won = loaded && game_is_won(&lv);
         }
 
-        // winning unlocks the next level and saves immediately
         if (won && current + 1 < num_levels && g_save.unlocked < current + 1) {
             g_save.unlocked = current + 1;
             persist();
         } else if (!g_save_ok) {
-            persist();                          // try again if it failed before
+            persist();
         }
 
-        // ---------- draw (the menus and the editor also handle their own input here) ----------
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
@@ -264,7 +251,7 @@ int main(void) {
             }
             if (action == MENU_NEW_GAME) {
                 if (has_progress()) {
-                    screen = SCREEN_CONFIRM_NEW;        // ask before erasing anything
+                    screen = SCREEN_CONFIRM_NEW;
                 } else {
                     current = 0;
                     loaded = new_game(&lv, &undo, &redo);
@@ -299,7 +286,6 @@ int main(void) {
             }
 
         } else if (screen == SCREEN_EDIT_SELECT) {
-            // every level can be edited, and "+" adds a new one (up to MAX_LEVELS)
             int pick = menu_level_select(cmd, "Level Editor", num_levels,
                                          num_levels - 1, num_levels < MAX_LEVELS);
             if (pick == LEVELSEL_BACK) {
@@ -314,12 +300,12 @@ int main(void) {
 
         } else if (screen == SCREEN_EDIT) {
             if (editor_run(&ed, cmd) == EDITOR_EXIT) {
-                num_levels = level_count();             // the editor may have added a level
+                num_levels = level_count();
                 menu_level_select_reset(ed.index);
                 screen = SCREEN_EDIT_SELECT;
             }
 
-        } else {    // SCREEN_PLAY
+        } else {
             if (!loaded) {
                 char path[64];
                 level_path(current, path, sizeof(path));
