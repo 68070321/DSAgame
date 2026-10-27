@@ -16,6 +16,7 @@ typedef enum {
     CMD_NEXT,       // next unlocked level
     CMD_LEVELS,     // open the level select screen
     CMD_BACK,       // go back (level select -> menu, game -> level select)
+    CMD_SOLVE,        //solves the puzzle
 
     // level editor only
     CMD_WALL,       // toggle a wall on the cursor cell
