@@ -129,6 +129,7 @@ static Command poll_command(Screen screen) {
 }
 
 int main(void) {
+    const char *hint_msg = "";
     InitWindow(800, 600, "Sokoban Studio");
     SetExitKey(KEY_NULL);               // Esc means "back" now, it must not close the window
     SetTargetFPS(60);
@@ -173,18 +174,30 @@ int main(void) {
                     if (cmd == CMD_DOWN)  dy = 1;
                     if (cmd == CMD_LEFT)  dx = -1;
                     if (cmd == CMD_RIGHT) dx = 1;
-                    if (cmd == CMD_SOLVE) {
-                        // Hint: first move of the shortest solution. It goes through
-                        // the normal move code below, so undo/redo just work.
+                                        if (cmd == CMD_SOLVE) {
                         Solution sol = solver_solve(&lv);
-                        if (sol.solved && sol.count > 0) {
-                            switch (sol.moves[0]) {
-                                case CMD_UP:    dy = -1; break;
-                                case CMD_DOWN:  dy =  1; break;
-                                case CMD_LEFT:  dx = -1; break;
-                                case CMD_RIGHT: dx =  1; break;
-                                default: break;
-                            }
+                        switch (sol.status) {
+                            case SOLVE_FOUND:
+                                hint_msg = "";
+                                if (sol.count > 0) {
+                                    switch (sol.moves[0]) {
+                                        case CMD_UP:    dy = -1; break;
+                                        case CMD_DOWN:  dy =  1; break;
+                                        case CMD_LEFT:  dx = -1; break;
+                                        case CMD_RIGHT: dx =  1; break;
+                                        default: break;
+                                    }
+                                }
+                                break;
+                            case SOLVE_UNWINNABLE:
+                                hint_msg = "This level can't be won";
+                                break;
+                            case SOLVE_TOO_BIG:
+                                hint_msg = "Too complex to check. It might still be winnable.";
+                                break;
+                            default:
+                                hint_msg = "Solver ran out of memory.";
+                                break;
                         }
                         solver_free_solution(&sol);
                     }
@@ -334,6 +347,7 @@ int main(void) {
                              40, 520, 18, RED);
                 DrawText(TextFormat("Undo steps: %d   Redo steps: %d", undo.top, redo.top),
                          40, 540, 20, GRAY);
+                DrawText(hint_msg, 40, 450, 20, RED);
 
                 if (won) {
                     const char *msg = (current + 1 < num_levels)
