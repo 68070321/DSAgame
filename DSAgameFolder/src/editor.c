@@ -370,7 +370,7 @@ EditorResult editor_run(Editor *ed, Command cmd) {
     DrawText("Keypad: 2/4/6/8 move  1 wall  3 box  5 goal  7 start  9 erase", 20, 482, 18, GRAY);
     DrawText("A/B width -/+  C/D height -/+  # save  0 back  (keyboard: Z/X, C/V, Enter)",
              20, 504, 18, GRAY);
-    DrawText("Mouse: pick a tool, click a cell.   T or Check: is it winnable?", 20, 526, 18, GRAY);
+    DrawText("Mouse: pick a tool, click a cell.   T or *: is it winnable?", 20, 526, 18, GRAY);
     if (ed->status[0] != '\0')
         DrawText(ed->status, 20, 556, 22, ed->status_error ? RED : DARKGREEN);
 

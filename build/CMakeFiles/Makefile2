@@ -106,12 +106,12 @@ src/clean:
 CMakeFiles/DSAgame.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAgame.dir\build.make CMakeFiles/DSAgame.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAgame.dir\build.make CMakeFiles/DSAgame.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\build\CMakeFiles" --progress-num=1,2,3,4,5,6,7,8,9 "Built target DSAgame"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\build\CMakeFiles" --progress-num=1,2,3,4,5,6,7,8,9,10,11,12 "Built target DSAgame"
 .PHONY : CMakeFiles/DSAgame.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/DSAgame.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\build\CMakeFiles" 9
+	$(CMAKE_COMMAND) -E cmake_progress_start "D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\build\CMakeFiles" 12
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/DSAgame.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\build\CMakeFiles" 0
 .PHONY : CMakeFiles/DSAgame.dir/rule

@@ -129,6 +129,30 @@ DSAgame/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAgame.dir\build.make CMakeFiles/DSAgame.dir/build
 .PHONY : DSAgame/fast
 
+src/editor.obj: src/editor.c.obj
+.PHONY : src/editor.obj
+
+# target to build an object file
+src/editor.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAgame.dir\build.make CMakeFiles/DSAgame.dir/src/editor.c.obj
+.PHONY : src/editor.c.obj
+
+src/editor.i: src/editor.c.i
+.PHONY : src/editor.i
+
+# target to preprocess a source file
+src/editor.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAgame.dir\build.make CMakeFiles/DSAgame.dir/src/editor.c.i
+.PHONY : src/editor.c.i
+
+src/editor.s: src/editor.c.s
+.PHONY : src/editor.s
+
+# target to generate assembly for a file
+src/editor.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAgame.dir\build.make CMakeFiles/DSAgame.dir/src/editor.c.s
+.PHONY : src/editor.c.s
+
 src/game.obj: src/game.c.obj
 .PHONY : src/game.obj
 
@@ -225,6 +249,30 @@ src/main.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAgame.dir\build.make CMakeFiles/DSAgame.dir/src/main.c.s
 .PHONY : src/main.c.s
 
+src/menu.obj: src/menu.c.obj
+.PHONY : src/menu.obj
+
+# target to build an object file
+src/menu.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAgame.dir\build.make CMakeFiles/DSAgame.dir/src/menu.c.obj
+.PHONY : src/menu.c.obj
+
+src/menu.i: src/menu.c.i
+.PHONY : src/menu.i
+
+# target to preprocess a source file
+src/menu.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAgame.dir\build.make CMakeFiles/DSAgame.dir/src/menu.c.i
+.PHONY : src/menu.c.i
+
+src/menu.s: src/menu.c.s
+.PHONY : src/menu.s
+
+# target to generate assembly for a file
+src/menu.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAgame.dir\build.make CMakeFiles/DSAgame.dir/src/menu.c.s
+.PHONY : src/menu.c.s
+
 src/save.obj: src/save.c.obj
 .PHONY : src/save.obj
 
@@ -272,6 +320,30 @@ src/serial.s: src/serial.c.s
 src/serial.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAgame.dir\build.make CMakeFiles/DSAgame.dir/src/serial.c.s
 .PHONY : src/serial.c.s
+
+src/solver.obj: src/solver.c.obj
+.PHONY : src/solver.obj
+
+# target to build an object file
+src/solver.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAgame.dir\build.make CMakeFiles/DSAgame.dir/src/solver.c.obj
+.PHONY : src/solver.c.obj
+
+src/solver.i: src/solver.c.i
+.PHONY : src/solver.i
+
+# target to preprocess a source file
+src/solver.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAgame.dir\build.make CMakeFiles/DSAgame.dir/src/solver.c.i
+.PHONY : src/solver.c.i
+
+src/solver.s: src/solver.c.s
+.PHONY : src/solver.s
+
+# target to generate assembly for a file
+src/solver.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAgame.dir\build.make CMakeFiles/DSAgame.dir/src/solver.c.s
+.PHONY : src/solver.c.s
 
 src/stack.obj: src/stack.c.obj
 .PHONY : src/stack.obj
@@ -330,6 +402,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... DSAgame
+	@echo ... src/editor.obj
+	@echo ... src/editor.i
+	@echo ... src/editor.s
 	@echo ... src/game.obj
 	@echo ... src/game.i
 	@echo ... src/game.s
@@ -342,12 +417,18 @@ help:
 	@echo ... src/main.obj
 	@echo ... src/main.i
 	@echo ... src/main.s
+	@echo ... src/menu.obj
+	@echo ... src/menu.i
+	@echo ... src/menu.s
 	@echo ... src/save.obj
 	@echo ... src/save.i
 	@echo ... src/save.s
 	@echo ... src/serial.obj
 	@echo ... src/serial.i
 	@echo ... src/serial.s
+	@echo ... src/solver.obj
+	@echo ... src/solver.i
+	@echo ... src/solver.s
 	@echo ... src/stack.obj
 	@echo ... src/stack.i
 	@echo ... src/stack.s

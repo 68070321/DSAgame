@@ -5,12 +5,15 @@ cmake_policy(SET CMP0009 NEW)
 # SOURCE_FILES at src/CMakeLists.txt:1 (file)
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/DSAgameFolder/src/*.c")
 set(OLD_GLOB
+  "D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/DSAgameFolder/src/editor.c"
   "D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/DSAgameFolder/src/game.c"
   "D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/DSAgameFolder/src/input.c"
   "D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/DSAgameFolder/src/level.c"
   "D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/DSAgameFolder/src/main.c"
+  "D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/DSAgameFolder/src/menu.c"
   "D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/DSAgameFolder/src/save.c"
   "D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/DSAgameFolder/src/serial.c"
+  "D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/DSAgameFolder/src/solver.c"
   "D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/DSAgameFolder/src/stack.c"
   "D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/DSAgameFolder/src/ui.c"
   )

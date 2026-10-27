@@ -71,11 +71,26 @@ include CMakeFiles/DSAgame.dir/flags.make
 CMakeFiles/DSAgame.dir/codegen:
 .PHONY : CMakeFiles/DSAgame.dir/codegen
 
+CMakeFiles/DSAgame.dir/src/editor.c.obj: CMakeFiles/DSAgame.dir/flags.make
+CMakeFiles/DSAgame.dir/src/editor.c.obj: CMakeFiles/DSAgame.dir/includes_C.rsp
+CMakeFiles/DSAgame.dir/src/editor.c.obj: D:/IT\ KMITL\ WORK/C\ CODING/ProjectWork/DSAgame/DSAgameFolder/src/editor.c
+CMakeFiles/DSAgame.dir/src/editor.c.obj: CMakeFiles/DSAgame.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/DSAgame.dir/src/editor.c.obj"
+	C:\msys64\ucrt64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/DSAgame.dir/src/editor.c.obj -MF CMakeFiles\DSAgame.dir\src\editor.c.obj.d -o CMakeFiles\DSAgame.dir\src\editor.c.obj -c "D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\DSAgameFolder\src\editor.c"
+
+CMakeFiles/DSAgame.dir/src/editor.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/DSAgame.dir/src/editor.c.i"
+	C:\msys64\ucrt64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\DSAgameFolder\src\editor.c" > CMakeFiles\DSAgame.dir\src\editor.c.i
+
+CMakeFiles/DSAgame.dir/src/editor.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/DSAgame.dir/src/editor.c.s"
+	C:\msys64\ucrt64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\DSAgameFolder\src\editor.c" -o CMakeFiles\DSAgame.dir\src\editor.c.s
+
 CMakeFiles/DSAgame.dir/src/game.c.obj: CMakeFiles/DSAgame.dir/flags.make
 CMakeFiles/DSAgame.dir/src/game.c.obj: CMakeFiles/DSAgame.dir/includes_C.rsp
 CMakeFiles/DSAgame.dir/src/game.c.obj: D:/IT\ KMITL\ WORK/C\ CODING/ProjectWork/DSAgame/DSAgameFolder/src/game.c
 CMakeFiles/DSAgame.dir/src/game.c.obj: CMakeFiles/DSAgame.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/DSAgame.dir/src/game.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/DSAgame.dir/src/game.c.obj"
 	C:\msys64\ucrt64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/DSAgame.dir/src/game.c.obj -MF CMakeFiles\DSAgame.dir\src\game.c.obj.d -o CMakeFiles\DSAgame.dir\src\game.c.obj -c "D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\DSAgameFolder\src\game.c"
 
 CMakeFiles/DSAgame.dir/src/game.c.i: cmake_force
@@ -90,7 +105,7 @@ CMakeFiles/DSAgame.dir/src/input.c.obj: CMakeFiles/DSAgame.dir/flags.make
 CMakeFiles/DSAgame.dir/src/input.c.obj: CMakeFiles/DSAgame.dir/includes_C.rsp
 CMakeFiles/DSAgame.dir/src/input.c.obj: D:/IT\ KMITL\ WORK/C\ CODING/ProjectWork/DSAgame/DSAgameFolder/src/input.c
 CMakeFiles/DSAgame.dir/src/input.c.obj: CMakeFiles/DSAgame.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/DSAgame.dir/src/input.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/DSAgame.dir/src/input.c.obj"
 	C:\msys64\ucrt64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/DSAgame.dir/src/input.c.obj -MF CMakeFiles\DSAgame.dir\src\input.c.obj.d -o CMakeFiles\DSAgame.dir\src\input.c.obj -c "D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\DSAgameFolder\src\input.c"
 
 CMakeFiles/DSAgame.dir/src/input.c.i: cmake_force
@@ -105,7 +120,7 @@ CMakeFiles/DSAgame.dir/src/level.c.obj: CMakeFiles/DSAgame.dir/flags.make
 CMakeFiles/DSAgame.dir/src/level.c.obj: CMakeFiles/DSAgame.dir/includes_C.rsp
 CMakeFiles/DSAgame.dir/src/level.c.obj: D:/IT\ KMITL\ WORK/C\ CODING/ProjectWork/DSAgame/DSAgameFolder/src/level.c
 CMakeFiles/DSAgame.dir/src/level.c.obj: CMakeFiles/DSAgame.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/DSAgame.dir/src/level.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/DSAgame.dir/src/level.c.obj"
 	C:\msys64\ucrt64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/DSAgame.dir/src/level.c.obj -MF CMakeFiles\DSAgame.dir\src\level.c.obj.d -o CMakeFiles\DSAgame.dir\src\level.c.obj -c "D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\DSAgameFolder\src\level.c"
 
 CMakeFiles/DSAgame.dir/src/level.c.i: cmake_force
@@ -120,7 +135,7 @@ CMakeFiles/DSAgame.dir/src/main.c.obj: CMakeFiles/DSAgame.dir/flags.make
 CMakeFiles/DSAgame.dir/src/main.c.obj: CMakeFiles/DSAgame.dir/includes_C.rsp
 CMakeFiles/DSAgame.dir/src/main.c.obj: D:/IT\ KMITL\ WORK/C\ CODING/ProjectWork/DSAgame/DSAgameFolder/src/main.c
 CMakeFiles/DSAgame.dir/src/main.c.obj: CMakeFiles/DSAgame.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/DSAgame.dir/src/main.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/DSAgame.dir/src/main.c.obj"
 	C:\msys64\ucrt64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/DSAgame.dir/src/main.c.obj -MF CMakeFiles\DSAgame.dir\src\main.c.obj.d -o CMakeFiles\DSAgame.dir\src\main.c.obj -c "D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\DSAgameFolder\src\main.c"
 
 CMakeFiles/DSAgame.dir/src/main.c.i: cmake_force
@@ -131,11 +146,26 @@ CMakeFiles/DSAgame.dir/src/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/DSAgame.dir/src/main.c.s"
 	C:\msys64\ucrt64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\DSAgameFolder\src\main.c" -o CMakeFiles\DSAgame.dir\src\main.c.s
 
+CMakeFiles/DSAgame.dir/src/menu.c.obj: CMakeFiles/DSAgame.dir/flags.make
+CMakeFiles/DSAgame.dir/src/menu.c.obj: CMakeFiles/DSAgame.dir/includes_C.rsp
+CMakeFiles/DSAgame.dir/src/menu.c.obj: D:/IT\ KMITL\ WORK/C\ CODING/ProjectWork/DSAgame/DSAgameFolder/src/menu.c
+CMakeFiles/DSAgame.dir/src/menu.c.obj: CMakeFiles/DSAgame.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/DSAgame.dir/src/menu.c.obj"
+	C:\msys64\ucrt64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/DSAgame.dir/src/menu.c.obj -MF CMakeFiles\DSAgame.dir\src\menu.c.obj.d -o CMakeFiles\DSAgame.dir\src\menu.c.obj -c "D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\DSAgameFolder\src\menu.c"
+
+CMakeFiles/DSAgame.dir/src/menu.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/DSAgame.dir/src/menu.c.i"
+	C:\msys64\ucrt64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\DSAgameFolder\src\menu.c" > CMakeFiles\DSAgame.dir\src\menu.c.i
+
+CMakeFiles/DSAgame.dir/src/menu.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/DSAgame.dir/src/menu.c.s"
+	C:\msys64\ucrt64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\DSAgameFolder\src\menu.c" -o CMakeFiles\DSAgame.dir\src\menu.c.s
+
 CMakeFiles/DSAgame.dir/src/save.c.obj: CMakeFiles/DSAgame.dir/flags.make
 CMakeFiles/DSAgame.dir/src/save.c.obj: CMakeFiles/DSAgame.dir/includes_C.rsp
 CMakeFiles/DSAgame.dir/src/save.c.obj: D:/IT\ KMITL\ WORK/C\ CODING/ProjectWork/DSAgame/DSAgameFolder/src/save.c
 CMakeFiles/DSAgame.dir/src/save.c.obj: CMakeFiles/DSAgame.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/DSAgame.dir/src/save.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/DSAgame.dir/src/save.c.obj"
 	C:\msys64\ucrt64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/DSAgame.dir/src/save.c.obj -MF CMakeFiles\DSAgame.dir\src\save.c.obj.d -o CMakeFiles\DSAgame.dir\src\save.c.obj -c "D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\DSAgameFolder\src\save.c"
 
 CMakeFiles/DSAgame.dir/src/save.c.i: cmake_force
@@ -150,7 +180,7 @@ CMakeFiles/DSAgame.dir/src/serial.c.obj: CMakeFiles/DSAgame.dir/flags.make
 CMakeFiles/DSAgame.dir/src/serial.c.obj: CMakeFiles/DSAgame.dir/includes_C.rsp
 CMakeFiles/DSAgame.dir/src/serial.c.obj: D:/IT\ KMITL\ WORK/C\ CODING/ProjectWork/DSAgame/DSAgameFolder/src/serial.c
 CMakeFiles/DSAgame.dir/src/serial.c.obj: CMakeFiles/DSAgame.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/DSAgame.dir/src/serial.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/DSAgame.dir/src/serial.c.obj"
 	C:\msys64\ucrt64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/DSAgame.dir/src/serial.c.obj -MF CMakeFiles\DSAgame.dir\src\serial.c.obj.d -o CMakeFiles\DSAgame.dir\src\serial.c.obj -c "D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\DSAgameFolder\src\serial.c"
 
 CMakeFiles/DSAgame.dir/src/serial.c.i: cmake_force
@@ -161,11 +191,26 @@ CMakeFiles/DSAgame.dir/src/serial.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/DSAgame.dir/src/serial.c.s"
 	C:\msys64\ucrt64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\DSAgameFolder\src\serial.c" -o CMakeFiles\DSAgame.dir\src\serial.c.s
 
+CMakeFiles/DSAgame.dir/src/solver.c.obj: CMakeFiles/DSAgame.dir/flags.make
+CMakeFiles/DSAgame.dir/src/solver.c.obj: CMakeFiles/DSAgame.dir/includes_C.rsp
+CMakeFiles/DSAgame.dir/src/solver.c.obj: D:/IT\ KMITL\ WORK/C\ CODING/ProjectWork/DSAgame/DSAgameFolder/src/solver.c
+CMakeFiles/DSAgame.dir/src/solver.c.obj: CMakeFiles/DSAgame.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/DSAgame.dir/src/solver.c.obj"
+	C:\msys64\ucrt64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/DSAgame.dir/src/solver.c.obj -MF CMakeFiles\DSAgame.dir\src\solver.c.obj.d -o CMakeFiles\DSAgame.dir\src\solver.c.obj -c "D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\DSAgameFolder\src\solver.c"
+
+CMakeFiles/DSAgame.dir/src/solver.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/DSAgame.dir/src/solver.c.i"
+	C:\msys64\ucrt64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\DSAgameFolder\src\solver.c" > CMakeFiles\DSAgame.dir\src\solver.c.i
+
+CMakeFiles/DSAgame.dir/src/solver.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/DSAgame.dir/src/solver.c.s"
+	C:\msys64\ucrt64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\DSAgameFolder\src\solver.c" -o CMakeFiles\DSAgame.dir\src\solver.c.s
+
 CMakeFiles/DSAgame.dir/src/stack.c.obj: CMakeFiles/DSAgame.dir/flags.make
 CMakeFiles/DSAgame.dir/src/stack.c.obj: CMakeFiles/DSAgame.dir/includes_C.rsp
 CMakeFiles/DSAgame.dir/src/stack.c.obj: D:/IT\ KMITL\ WORK/C\ CODING/ProjectWork/DSAgame/DSAgameFolder/src/stack.c
 CMakeFiles/DSAgame.dir/src/stack.c.obj: CMakeFiles/DSAgame.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/DSAgame.dir/src/stack.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/DSAgame.dir/src/stack.c.obj"
 	C:\msys64\ucrt64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/DSAgame.dir/src/stack.c.obj -MF CMakeFiles\DSAgame.dir\src\stack.c.obj.d -o CMakeFiles\DSAgame.dir\src\stack.c.obj -c "D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\DSAgameFolder\src\stack.c"
 
 CMakeFiles/DSAgame.dir/src/stack.c.i: cmake_force
@@ -180,7 +225,7 @@ CMakeFiles/DSAgame.dir/src/ui.c.obj: CMakeFiles/DSAgame.dir/flags.make
 CMakeFiles/DSAgame.dir/src/ui.c.obj: CMakeFiles/DSAgame.dir/includes_C.rsp
 CMakeFiles/DSAgame.dir/src/ui.c.obj: D:/IT\ KMITL\ WORK/C\ CODING/ProjectWork/DSAgame/DSAgameFolder/src/ui.c
 CMakeFiles/DSAgame.dir/src/ui.c.obj: CMakeFiles/DSAgame.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/DSAgame.dir/src/ui.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/DSAgame.dir/src/ui.c.obj"
 	C:\msys64\ucrt64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/DSAgame.dir/src/ui.c.obj -MF CMakeFiles\DSAgame.dir\src\ui.c.obj.d -o CMakeFiles\DSAgame.dir\src\ui.c.obj -c "D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\DSAgameFolder\src\ui.c"
 
 CMakeFiles/DSAgame.dir/src/ui.c.i: cmake_force
@@ -193,31 +238,37 @@ CMakeFiles/DSAgame.dir/src/ui.c.s: cmake_force
 
 # Object files for target DSAgame
 DSAgame_OBJECTS = \
+"CMakeFiles/DSAgame.dir/src/editor.c.obj" \
 "CMakeFiles/DSAgame.dir/src/game.c.obj" \
 "CMakeFiles/DSAgame.dir/src/input.c.obj" \
 "CMakeFiles/DSAgame.dir/src/level.c.obj" \
 "CMakeFiles/DSAgame.dir/src/main.c.obj" \
+"CMakeFiles/DSAgame.dir/src/menu.c.obj" \
 "CMakeFiles/DSAgame.dir/src/save.c.obj" \
 "CMakeFiles/DSAgame.dir/src/serial.c.obj" \
+"CMakeFiles/DSAgame.dir/src/solver.c.obj" \
 "CMakeFiles/DSAgame.dir/src/stack.c.obj" \
 "CMakeFiles/DSAgame.dir/src/ui.c.obj"
 
 # External object files for target DSAgame
 DSAgame_EXTERNAL_OBJECTS =
 
+DSAgame/DSAgame.exe: CMakeFiles/DSAgame.dir/src/editor.c.obj
 DSAgame/DSAgame.exe: CMakeFiles/DSAgame.dir/src/game.c.obj
 DSAgame/DSAgame.exe: CMakeFiles/DSAgame.dir/src/input.c.obj
 DSAgame/DSAgame.exe: CMakeFiles/DSAgame.dir/src/level.c.obj
 DSAgame/DSAgame.exe: CMakeFiles/DSAgame.dir/src/main.c.obj
+DSAgame/DSAgame.exe: CMakeFiles/DSAgame.dir/src/menu.c.obj
 DSAgame/DSAgame.exe: CMakeFiles/DSAgame.dir/src/save.c.obj
 DSAgame/DSAgame.exe: CMakeFiles/DSAgame.dir/src/serial.c.obj
+DSAgame/DSAgame.exe: CMakeFiles/DSAgame.dir/src/solver.c.obj
 DSAgame/DSAgame.exe: CMakeFiles/DSAgame.dir/src/stack.c.obj
 DSAgame/DSAgame.exe: CMakeFiles/DSAgame.dir/src/ui.c.obj
 DSAgame/DSAgame.exe: CMakeFiles/DSAgame.dir/build.make
 DSAgame/DSAgame.exe: CMakeFiles/DSAgame.dir/linkLibs.rsp
 DSAgame/DSAgame.exe: CMakeFiles/DSAgame.dir/objects1.rsp
 DSAgame/DSAgame.exe: CMakeFiles/DSAgame.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_9) "Linking C executable DSAgame\DSAgame.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="D:\IT KMITL WORK\C CODING\ProjectWork\DSAgame\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_12) "Linking C executable DSAgame\DSAgame.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\DSAgame.dir\link.txt --verbose=$(VERBOSE)
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy_directory "D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/DSAgameFolder/levels" "D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/build/DSAgame/levels"
 

@@ -1,6 +1,12 @@
 [
 {
   "directory": "D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\gcc.exe  @CMakeFiles/DSAgame.dir/includes_C.rsp -g -std=gnu11 -Wall -Wextra -o CMakeFiles\\DSAgame.dir\\src\\editor.c.obj -c \"D:\\IT KMITL WORK\\C CODING\\ProjectWork\\DSAgame\\DSAgameFolder\\src\\editor.c\"",
+  "file": "D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/DSAgameFolder/src/editor.c",
+  "output": "CMakeFiles/DSAgame.dir/src/editor.c.obj"
+},
+{
+  "directory": "D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/build",
   "command": "C:\\msys64\\ucrt64\\bin\\gcc.exe  @CMakeFiles/DSAgame.dir/includes_C.rsp -g -std=gnu11 -Wall -Wextra -o CMakeFiles\\DSAgame.dir\\src\\game.c.obj -c \"D:\\IT KMITL WORK\\C CODING\\ProjectWork\\DSAgame\\DSAgameFolder\\src\\game.c\"",
   "file": "D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/DSAgameFolder/src/game.c",
   "output": "CMakeFiles/DSAgame.dir/src/game.c.obj"
@@ -25,6 +31,12 @@
 },
 {
   "directory": "D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\gcc.exe  @CMakeFiles/DSAgame.dir/includes_C.rsp -g -std=gnu11 -Wall -Wextra -o CMakeFiles\\DSAgame.dir\\src\\menu.c.obj -c \"D:\\IT KMITL WORK\\C CODING\\ProjectWork\\DSAgame\\DSAgameFolder\\src\\menu.c\"",
+  "file": "D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/DSAgameFolder/src/menu.c",
+  "output": "CMakeFiles/DSAgame.dir/src/menu.c.obj"
+},
+{
+  "directory": "D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/build",
   "command": "C:\\msys64\\ucrt64\\bin\\gcc.exe  @CMakeFiles/DSAgame.dir/includes_C.rsp -g -std=gnu11 -Wall -Wextra -o CMakeFiles\\DSAgame.dir\\src\\save.c.obj -c \"D:\\IT KMITL WORK\\C CODING\\ProjectWork\\DSAgame\\DSAgameFolder\\src\\save.c\"",
   "file": "D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/DSAgameFolder/src/save.c",
   "output": "CMakeFiles/DSAgame.dir/src/save.c.obj"
@@ -34,6 +46,12 @@
   "command": "C:\\msys64\\ucrt64\\bin\\gcc.exe  @CMakeFiles/DSAgame.dir/includes_C.rsp -g -std=gnu11 -Wall -Wextra -o CMakeFiles\\DSAgame.dir\\src\\serial.c.obj -c \"D:\\IT KMITL WORK\\C CODING\\ProjectWork\\DSAgame\\DSAgameFolder\\src\\serial.c\"",
   "file": "D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/DSAgameFolder/src/serial.c",
   "output": "CMakeFiles/DSAgame.dir/src/serial.c.obj"
+},
+{
+  "directory": "D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\gcc.exe  @CMakeFiles/DSAgame.dir/includes_C.rsp -g -std=gnu11 -Wall -Wextra -o CMakeFiles\\DSAgame.dir\\src\\solver.c.obj -c \"D:\\IT KMITL WORK\\C CODING\\ProjectWork\\DSAgame\\DSAgameFolder\\src\\solver.c\"",
+  "file": "D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/DSAgameFolder/src/solver.c",
+  "output": "CMakeFiles/DSAgame.dir/src/solver.c.obj"
 },
 {
   "directory": "D:/IT KMITL WORK/C CODING/ProjectWork/DSAgame/build",
