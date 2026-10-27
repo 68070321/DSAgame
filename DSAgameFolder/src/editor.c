@@ -1,5 +1,6 @@
 #include "editor.h"
 #include "ui.h"
+#include "solver.h"
 #include "raylib.h"
 
 #include <stdarg.h>
@@ -182,9 +183,8 @@ static void resize(Editor *ed, int dw, int dh) {
     set_status(ed, false, "Size: %d x %d", nw, nh);
 }
 
-// Checks that the level can be played, then writes the file.
-static void save_level(Editor *ed) {
-    const Level *lv = &ed->lv;
+// Basic rules a level must follow. Returns true and fills `msg` if something is wrong.
+static bool level_problem(const Level *lv, char *msg, size_t size) {
     int boxes = 0, goals = 0, unsolved = 0;
 
     for (int y = 0; y < lv->height; y++) {
@@ -196,24 +196,83 @@ static void save_level(Editor *ed) {
         }
     }
 
+    if (boxes == 0)
+        snprintf(msg, size, "add at least one box (3)");
+    else if (goals != boxes)
+        snprintf(msg, size, "%d boxes but %d goals. They must match", boxes, goals);
+    else if (unsolved == 0)
+        snprintf(msg, size, "every box is already on a goal");
+    else
+        return false;
+    return true;
+}
+
+// Runs the solver on the level as it is now. Shows the result in the status bar
+// and returns it. The search can take a moment on big or open maps.
+static SolveStatus check_level(Editor *ed, bool announce) {
+    char problem[64];
+    if (level_problem(&ed->lv, problem, sizeof(problem))) {
+        set_status(ed, true, "Can't check: %s", problem);
+        return SOLVE_ERROR;
+    }
+
+    Solution sol = solver_solve(&ed->lv);
+    SolveStatus status = sol.status;
+    int moves = sol.count;
+    solver_free_solution(&sol);
+
+    if (announce) {
+        switch (status) {
+            case SOLVE_FOUND:
+                set_status(ed, false, "Solvable! Best solution: %d moves", moves);
+                break;
+            case SOLVE_UNWINNABLE:
+                set_status(ed, true, "UNWINNABLE: this level can't be completed");
+                break;
+            case SOLVE_TOO_BIG:
+                set_status(ed, true, "Too complex to check. It might still be winnable");
+                break;
+            default:
+                set_status(ed, true, "Check failed: out of memory");
+                break;
+        }
+    }
+    return status;
+}
+
+// Checks that the level follows the rules, then writes the file. A level that
+// can't be won is still saved (it may be half finished) but with a loud warning.
+static void save_level(Editor *ed) {
+    char problem[64];
     ed->back_armed = false;
 
-    if (boxes == 0) {
-        set_status(ed, true, "Can't save: add at least one box (3)");
-    } else if (goals != boxes) {
-        set_status(ed, true, "Can't save: %d boxes but %d goals. They must match", boxes, goals);
-    } else if (unsolved == 0) {
-        set_status(ed, true, "Can't save: every box is already on a goal");
-    } else {
-        char path[64];
-        level_path(ed->index, path, sizeof(path));
-        if (level_save(lv, path)) {
-            ed->dirty = false;
-            ed->is_new = false;
+    if (level_problem(&ed->lv, problem, sizeof(problem))) {
+        set_status(ed, true, "Can't save: %s", problem);
+        return;
+    }
+
+    char path[64];
+    level_path(ed->index, path, sizeof(path));
+    if (!level_save(&ed->lv, path)) {
+        set_status(ed, true, "Could not write %s", path);
+        return;
+    }
+    ed->dirty = false;
+    ed->is_new = false;
+
+    switch (check_level(ed, false)) {
+        case SOLVE_FOUND:
+            set_status(ed, false, "Saved %s. Solvable", path);
+            break;
+        case SOLVE_UNWINNABLE:
+            set_status(ed, true, "Saved, but WARNING: this level can't be won!");
+            break;
+        case SOLVE_TOO_BIG:
+            set_status(ed, false, "Saved %s. Too complex to check", path);
+            break;
+        default:
             set_status(ed, false, "Saved %s", path);
-        } else {
-            set_status(ed, true, "Could not write %s", path);
-        }
+            break;
     }
 }
 
@@ -229,6 +288,9 @@ static bool try_leave(Editor *ed) {
 EditorResult editor_run(Editor *ed, Command cmd) {
     Level *lv = &ed->lv;
     EditorResult result = EDITOR_STAY;
+
+    // ---------- check key (read here so no other file needs a new command) ----------
+    if (IsKeyPressed(KEY_T)) check_level(ed, true);
 
     // ---------- keypad / keyboard ----------
     switch (cmd) {
@@ -247,6 +309,7 @@ EditorResult editor_run(Editor *ed, Command cmd) {
         case CMD_TALLER:   resize(ed, 0, 1);  break;
         case CMD_SAVE:     save_level(ed); break;
         case CMD_BACK:     if (try_leave(ed)) result = EDITOR_EXIT; break;
+        case CMD_CHECK: check_level(ed, true); break;
         default: break;
     }
 
@@ -296,16 +359,18 @@ EditorResult editor_run(Editor *ed, Command cmd) {
             resize(ed, size_dw[i], size_dh[i]);
     }
 
-    if (ui_button(PANEL_X, 360, PANEL_W, 40, "Save (#)", false, true))
+    if (ui_button(PANEL_X, 352, PANEL_W, 36, "Check (T)", false, true))
+        check_level(ed, true);
+    if (ui_button(PANEL_X, 394, PANEL_W, 36, "Save (#)", false, true))
         save_level(ed);
-    if (ui_button(PANEL_X, 408, PANEL_W, 40, "Back (0)", false, true))
+    if (ui_button(PANEL_X, 436, PANEL_W, 36, "Back (0)", false, true))
         if (try_leave(ed)) result = EDITOR_EXIT;
 
     // ---------- hints and status ----------
     DrawText("Keypad: 2/4/6/8 move  1 wall  3 box  5 goal  7 start  9 erase", 20, 482, 18, GRAY);
     DrawText("A/B width -/+  C/D height -/+  # save  0 back  (keyboard: Z/X, C/V, Enter)",
              20, 504, 18, GRAY);
-    DrawText("Mouse: pick a tool on the right, then click a cell", 20, 526, 18, GRAY);
+    DrawText("Mouse: pick a tool, click a cell.   T or Check: is it winnable?", 20, 526, 18, GRAY);
     if (ed->status[0] != '\0')
         DrawText(ed->status, 20, 556, 22, ed->status_error ? RED : DARKGREEN);
 
