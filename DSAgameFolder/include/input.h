@@ -28,7 +28,8 @@ typedef enum {
     CMD_WIDER,      // map one column wider
     CMD_SHORTER,    // map one row shorter
     CMD_TALLER,     // map one row taller
-    CMD_SAVE        // save the level
+    CMD_SAVE,        // save the level
+    CMD_CHECK       // check if the level is winnable
 } Command;
 
 // Maps one character sent by the Arduino keypad to a command (game and menus).
