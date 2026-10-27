@@ -124,6 +124,7 @@ static Command poll_command(Screen screen) {
     if (IsKeyPressed(KEY_N))      return CMD_NEXT;
     if (IsKeyPressed(KEY_L))      return CMD_LEVELS;
     if (IsKeyPressed(KEY_ESCAPE)) return CMD_BACK;
+    if (IsKeyPressed(KEY_H))      return CMD_SOLVE;
     return CMD_NONE;
 }
 
