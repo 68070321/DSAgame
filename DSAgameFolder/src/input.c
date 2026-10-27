@@ -51,6 +51,7 @@ Command input_from_key_editor(int c) {
         case 'C': return CMD_SHORTER;
         case 'D': return CMD_TALLER;
         case '#': return CMD_SAVE;
+        case '*': return CMD_CHECK;
         case '0': return CMD_BACK;
         default:  return CMD_NONE;
     }
