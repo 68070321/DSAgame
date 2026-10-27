@@ -69,7 +69,12 @@ static bool visit_if_new(int *table, const Node *nodes, const Level *lv, int new
 }
 
 Solution solver_solve(const Level *initial_level) {
-    Solution sol = { .moves = NULL, .count = 0, .solved = false };
+    Solution sol = {
+        .moves = NULL,
+        .count = 0,
+        .solved = false,
+        .status = SOLVE_ERROR
+    };
 
     Node *nodes = malloc(sizeof(Node) * (size_t)MAX_NODES);
     int  *table = malloc(sizeof(int) * (size_t)HASH_SIZE);
@@ -78,6 +83,7 @@ Solution solver_solve(const Level *initial_level) {
         free(table);
         return sol;
     }
+    sol.status = SOLVE_UNWINNABLE;
     for (int i = 0; i < HASH_SIZE; i++) table[i] = EMPTY_SLOT;
 
     int count = 0;      // nodes stored so far (tail of the queue)
@@ -114,7 +120,10 @@ Solution solver_solve(const Level *initial_level) {
             if (pushing && is_corner_deadlock(&next, nx + DIRS[i].dx, ny + DIRS[i].dy))
                 continue;
 
-            if (count >= MAX_NODES) goto done;      // out of budget: give up
+            if (count >= MAX_NODES) {
+                sol.status = SOLVE_TOO_BIG;
+                goto done;                          // out of budget: give up
+            }
 
             nodes[count].state = next;
             if (visit_if_new(table, nodes, &nodes[count].state, count)) continue;
@@ -131,18 +140,21 @@ done:
         int len = 0;
         for (int n = found; nodes[n].parent != -1; n = nodes[n].parent) len++;
 
-        sol.solved = true;
         sol.count  = len;
         if (len > 0) {
             sol.moves = malloc(sizeof(Command) * (size_t)len);
             if (!sol.moves) {                       // out of memory: report failure
-                sol.solved = false;
                 sol.count  = 0;
+                sol.status = SOLVE_ERROR;
             } else {
                 int k = len;
                 for (int n = found; nodes[n].parent != -1; n = nodes[n].parent)
                     sol.moves[--k] = nodes[n].cmd;
             }
+        }
+        if (len == 0 || sol.moves) {
+            sol.solved = true;
+            sol.status = SOLVE_FOUND;
         }
     }
 
